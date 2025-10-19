@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Discord</title>
+
+  <link rel="apple-touch-icon" href="images/discord-logo-icon-editorial-free-vector.jpg">
+  <link rel="icon" type="image/png" sizes="192x192" href="images/discord-logo-icon-editorial-free-vector.jpg">
+  <link rel="manifest" href="manifest.json">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#a200ff">
+
+  <script src="js/particles.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #020010;
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .login-box {
+      background: black;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 0 40px #353436, 0 0 80px #353436;
+      margin-bottom: 20px;
+    }
+    .login-box img {
+      width: 80px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 10px #353436);
+    }
+    .login-box h2 {
+      margin: 10px 0 20px;
+      color: red;
+      text-shadow: 0 0 10px purple;
+    }
+    .login-box input {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 2px solid purple;
+      border-radius: 8px;
+      background: #111;
+      color: purple;
+      font-size: 16px;
+      outline: none;
+      box-shadow: 0 0 10px #353436;
+    }
+    .login-box button {
+      width: 95%;
+      padding: 12px;
+      margin: 8px 0;
+      background: #353436;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #353436, 0 0 40px #353436;
+      transition: 0.3s;
+    }
+    .login-box button:hover {
+      background: #605c61;
+      box-shadow: 0 0 30px #353436, 0 0 60px #353436;
+    }
+
+    .menu {
+      background: #151515;
+      color: #5e5c60;
+      padding: 20px;
+      border-radius: 8px;
+      width: 330px;
+      box-shadow: 0 0 15px #353436, 0 0 30px #353436;
+      text-align: center;
+      text-shadow: 0 0 5px #353436;
+    }
+    .menu-title {
+      font-size: 18px;
+      font-weight: bold;
+      padding-bottom: 10px;
+      color: #918f93;
+      text-shadow: 0 0 10px #918f93;
+    }
+    hr {
+      border: none;
+      height: 2px;
+      background: #353436;
+      margin-bottom: 10px;
+      box-shadow: 0 0 10px #353436;
+    }
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+    }
+    .tab {
+      flex: 1;
+      background: #222222;
+      padding: 8px;
+      border-radius: 5px;
+      color: #5d5a5f;
+      border: none;
+      cursor: pointer;
+      margin: 0 5px;
+      box-shadow: 0 0 5px #353436;
+    }
+    .tab.active {
+      background: #6a686b;
+      box-shadow: 0 0 15px #353436;
+      color: #fff;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    .checkbox input {
+      display: none;
+    }
+
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: #444245;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-size: 14px;
+      font-weight: bold;
+      margin-right: 10px;
+      box-shadow: 0 0 5px #353436;
+    }
+
+    .checkbox input:checked + .checkmark {
+      background: #59535c;
+      color: white;
+      box-shadow: 0 0 10px #353436;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+      color: #706d72;
+    }
+    .slider {
+      width: 90%;
+      height: 6px;
+      background: #2f2f2f;
+      border-radius: 5px;
+      outline: none;
+      box-shadow: inset 0 0 10px #353436;
+    }
+    .slider::-webkit-slider-thumb {
+      width: 14px;
+      height: 14px;
+      background: #565656;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px #353436;
+    }
+    .combobox {
+      width: 100%;
+      padding: 8px;
+      background: #3e3d3e;
+      color: #767577;
+      border: 2px solid #676069;
+      border-radius: 5px;
+      margin: 10px 0;
+      box-shadow: 0 0 10px #353436;
+    }
+    .radio-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      color: #68666a;
+    }
+    .radio {
+      display: flex;
+      align-items: center;
+    }
+    .radio input {
+      display: none;
+    }
+    .radio-mark {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #3c3b3c;
+      margin-right: 5px;
+      box-shadow: 0 0 5px #353436;
+    }
+    .radio input:checked + .radio-mark {
+      background: #706c71;
+      box-shadow: 0 0 10px #353436;
+    }
+    .separator {
+      height: 1px;
+      background: #79767a;
+      margin: 10px 0;
+      box-shadow: 0 0 8px #79767a;
+    }
+    .inject-container {
+      margin-top: 20px;
+    }
+    #injectButton {
+      width: 330px;
+      padding: 12px;
+      background-color: #79767a;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 0 15px #79767a;
+    }
+    #injectButton:hover {
+      background-color: #454346;
+      box-shadow: 0 0 20px #79767a;
+    }
+
+    #mainPanel {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<!-- LOGIN -->
+<div id="loginPanel" class="login-box">
+  <img src="images/Sem_Titulo-2_copia.PNG" alt="Logo">
+  <h2>EXTERNO NEW SAGAZ 777</h2>
+  <input type="password" placeholder="Digite Sua Key" id="keyInput">
+  <button onclick="login()">Login</button>
+  <button onclick="window.open('https://www.tiktok.com/@new_sagaz')">TIKTOK</button>
+</div>
+
+<!-- PAINEL -->
+<div id="mainPanel">
+  <div class="menu">
+    <div class="menu-title">PAINEL NEW SAGAZ 777<hr></div>
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('aimbot')">Aimbot</button>
+      <button class="tab" onclick="showTab('info')">Info</button>
+    </div>
+    <div class="content" id="content">
+      <div id="aimbotTab">
+        <label class="checkbox">
+          <input type="checkbox">
+          <span class="checkmark">✔</span>
+          Ativar Auxílio
+        </label>
+        <label class="checkbox">
+          <input type="checkbox">
+          <span class="checkmark">✔</span>
+          Ativar Fov
+        </label>
+        <div class="separator"></div>
+        <div class="slider-container">
+          <input type="range" min="0" max="10" value="0" step="1" class="slider" id="fovSlider">
+          <span>Fov <span id="fovValue">0</span></span>
+        </div>
+        <select class="combobox">
+          <option>Auxilio Head</option>
+          <option>Auxilio Recoil</option>
+          <option>Auxilio Sensi</option>
+        </select>
+        <div class="separator"></div>
+        <span>Tipo de Aimbot:</span>
+        <div class="radio-group">
+          <label class="radio">
+            <input type="radio" name="aimbotType" checked="">
+            <span class="radio-mark"></span>
+            Ao Atirar
+          </label>
+          <label class="radio">
+            <input type="radio" name="aimbotType">
+            <span class="radio-mark"></span>
+            Ao Olhar
+          </label>
+        </div>
+      </div>
+      <div id="infoTab" style="display: none; text-align: left;">
+        <p><strong>Modelo:</strong> <span id="deviceModel"></span></p>
+        <p><strong>Key:</strong> <span id="userKey"></span></p>
+        <hr>
+        <p><strong>Dicas:</strong> Ative as Funçoes No Treinamento minimizado.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="inject-container">
+    <button id="injectButton" onclick="injectFunctions()">INJETAR FUNÇÕES NO JOGO</button>
+  </div>
+</div>
+
+<script>
+  const MOCKAPI_URL = "https://68f27d4fb36f9750deecce00.mockapi.io/keys"; // Substitua pela sua URL da MockAPI
+
+  function showTab(tab) {
+    document.getElementById("aimbotTab").style.display = tab === "aimbot" ? "block" : "none";
+    document.getElementById("infoTab").style.display = tab === "info" ? "block" : "none";
+
+    let tabs = document.querySelectorAll(".tab");
+    tabs.forEach((button) => button.classList.remove("active"));
+    tabs[tab === "aimbot" ? 0 : 1].classList.add("active");
+  }
+
+  function detectDevice() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    if (/android/i.test(userAgent)) {
+      document.getElementById("deviceModel").innerText = "Android";
+    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      document.getElementById("deviceModel").innerText = "iPhone";
+    } else {
+      document.getElementById("deviceModel").innerText = "Desconhecido";
+    }
+  }
+
+  function injectFunctions() {
+    window.location.href = "freefiremax://";
+  }
+
+  document.getElementById("fovSlider").addEventListener("input", function () {
+    document.getElementById("fovValue").innerText = this.value;
+  });
+
+  async function login() {
+    const key = document.getElementById("keyInput").value.trim();
+    if (!key) return alert("Digite uma key!");
+
+    try {
+      const res = await fetch(MOCKAPI_URL);
+      const data = await res.json();
+      const keyExists = data.some(item => item.key === key);
+
+      if (keyExists) {
+        document.getElementById("loginPanel").style.display = "none";
+        document.getElementById("mainPanel").style.display = "flex";
+        document.getElementById("userKey").innerText = key;
+      } else {
+        alert("Key inválida. Tente novamente.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao validar a key. Tente novamente mais tarde.");
+    }
+  }
+
+  // Checkbox destaque
+  document.querySelectorAll('.checkbox input').forEach((input) => {
+    input.addEventListener('change', function () {
+      const container = this.closest('.checkbox');
+      container.style.backgroundColor = this.checked ? '#2a272b' : 'transparent';
+    });
+  });
+
+  detectDevice();
+
+  particlesJS("particles-js", {
+    particles: {
+      number: { value: 60, density: { enable: true, value_area: 700 } },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+      opacity: { value: 0.7, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+      size: { value: 4, random: true, anim: { enable: true, speed: 4, size_min: 1, sync: false } },
+      line_linked: { enable: false },
+      move: { enable: true, speed: 2, direction: "none", out_mode: "out" }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: false } },
+      modes: { grab: { distance: 200, line_linked: { opacity: 0.5 } } }
+    },
+    retina_detect: true
+  });
+</script>
+
+</body>
+</html>
